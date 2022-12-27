@@ -46,6 +46,6 @@ export default App = () => {
 					name='Messages'
 					component={Messages}></Stack.Screen>
 			</Stack.Navigator>
-		</NavigationContainer>
+		</NavigationContainer
 	);
 };
