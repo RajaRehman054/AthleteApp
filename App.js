@@ -10,6 +10,11 @@ import EditingTeam from './screens/EditingTeam';
 import Settings from './screens/Settings';
 import ChangePassword from './screens/ChangePassword';
 import Messages from './screens/Messages';
+import Notifications from './screens/Notifications';
+import EditProfile from './screens/EditProfile';
+import Location from './screens/Location';
+import LookingForAthlete from './screens/LookingForAthlete';
+import MessageChat from './screens/MessageChat';
 
 const Stack = createNativeStackNavigator();
 
@@ -45,6 +50,21 @@ export default App = () => {
 				<Stack.Screen
 					name='Messages'
 					component={Messages}></Stack.Screen>
+				<Stack.Screen
+					name='Notifications'
+					component={Notifications}></Stack.Screen>
+				<Stack.Screen
+					name='EditProfile'
+					component={EditProfile}></Stack.Screen>
+				<Stack.Screen
+					name='Location'
+					component={Location}></Stack.Screen>
+				<Stack.Screen
+					name='LookingForAthlete'
+					component={LookingForAthlete}></Stack.Screen>
+				<Stack.Screen
+					name='MessageChat'
+					component={MessageChat}></Stack.Screen>
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

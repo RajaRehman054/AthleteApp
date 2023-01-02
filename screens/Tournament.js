@@ -5,7 +5,7 @@ import styles from './styles';
 import Participants from './Participants';
 
 const img1 = require('../assets/pics/image2.png');
-export default function Tournament({ navigation, route }) {
+export default function Tournament({ navigation }) {
 	return (
 		<ScrollView>
 			<View style={styles.matchmenubar}>
@@ -47,7 +47,9 @@ export default function Tournament({ navigation, route }) {
 				<View style={styles.rightview2}>
 					<View style={styles.rightview3}>
 						<Text style={styles.text1}>London Club</Text>
-						<TouchableOpacity style={styles.settings}>
+						<TouchableOpacity
+							style={styles.settings}
+							onPress={() => navigation.navigate('EditingTeam')}>
 							<Ionicons
 								name='ios-settings-sharp'
 								color={'white'}
@@ -63,7 +65,9 @@ export default function Tournament({ navigation, route }) {
 
 					<View style={styles.rightview4}>
 						<View style={styles.buttonview}>
-							<TouchableOpacity style={styles.messagebutton}>
+							<TouchableOpacity
+								style={styles.messagebutton}
+								onPress={() => navigation.navigate('Messages')}>
 								<Text
 									style={{
 										color: '#020D28',

@@ -1,15 +1,5 @@
 import React, { useState } from 'react';
-import {
-	Text,
-	Keyboard,
-	View,
-	Button,
-	TouchableOpacity,
-	Image,
-	StyleSheet,
-	Platform,
-	TextInput,
-} from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Switch } from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -118,7 +108,9 @@ export default function Settings({ navigation }) {
 							/>
 						</View>
 					</View>
-					<TouchableOpacity style={styles.button11}>
+					<TouchableOpacity
+						style={styles.button11}
+						onPress={() => navigation.navigate('EditProfile')}>
 						<View style={{ width: '15%' }}>
 							<Ionicons
 								name='settings-sharp'
@@ -148,7 +140,9 @@ export default function Settings({ navigation }) {
 						</View>
 						<Text style={styles.text12}>Change password</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.button11}>
+					<TouchableOpacity
+						style={styles.button11}
+						onPress={() => navigation.navigate('Location')}>
 						<View style={{ width: '15%' }}>
 							<Ionicons
 								name='location-sharp'

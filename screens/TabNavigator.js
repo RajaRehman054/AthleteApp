@@ -1,8 +1,8 @@
 import HomeScreen from './HomeScreen';
 import AthletePage from './AthletePage';
 import SearchTeam from './SearchTeam';
-import Matches from './Matches';
-import Settings from './Settings';
+import MatchesScreen from './MatchesScreen';
+import MemberProfile from './MemberProfile';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -62,8 +62,8 @@ export default function TabNavigator() {
 				}}
 			/>
 			<Tab.Screen
-				name='Matches'
-				component={Matches}
+				name='MatchesScreen'
+				component={MatchesScreen}
 				options={{
 					tabBarLabel: 'Matches',
 					tabBarIcon: ({ color, size }) => (
@@ -76,8 +76,8 @@ export default function TabNavigator() {
 				}}
 			/>
 			<Tab.Screen
-				name='Profile'
-				component={Settings}
+				name='MemberProfile'
+				component={MemberProfile}
 				options={{
 					tabBarLabel: 'Profile',
 					tabBarIcon: ({ color, size }) => (

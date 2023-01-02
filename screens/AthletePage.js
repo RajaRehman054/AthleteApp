@@ -1,383 +1,378 @@
-import * as React from 'react';
-import {
-	TextInput,
-	TouchableOpacity,
-	Image,
-	Text,
-	View,
-	StyleSheet,
-} from 'react-native';
+import { TextInput, TouchableOpacity, Image, Text, View } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Avatar } from 'react-native-paper';
+import styles from './stylesnew';
 
-export default function App() {
+const img1 = require('../assets/pics/image2.png');
+const img2 = require('../assets/pics/jrz1y1(2).png');
+
+export default function AthletePage({ navigation }) {
 	return (
 		<View>
-			<View style={styles.container}>
-				<Image
-					source={require('../assets/pics/jrz1y1(2).png')}
-					style={styles.image}></Image>
-
-				<TouchableOpacity onPress={() => {}} style={styles.bellIcon}>
-					<Image
-						source={require('../assets/pics/Vector.png')}
-						style={styles.imageBellIcon}></Image>
+			<View style={styles.menubar}>
+				<TouchableOpacity
+					style={[styles.icon1, { width: '17%', marginLeft: 10 }]}>
+					<Image source={img2} style={styles.image}></Image>
 				</TouchableOpacity>
 
-				<TouchableOpacity>
-					<Image
-						source={require('../assets/pics/Vector(1).png')}
-						style={styles.arrowIcon}></Image>
-				</TouchableOpacity>
+				<View
+					style={{
+						width: '22%',
+						flexDirection: 'row',
+						marginRight: 10,
+					}}>
+					<TouchableOpacity
+						style={[styles.icon1, { width: '55%' }]}
+						onPress={() => navigation.navigate('Notifications')}>
+						<Ionicons
+							name='notifications-circle'
+							color={'white'}
+							size={45}
+							style={{ marginLeft: 'auto', marginRight: 'auto' }}
+						/>
+					</TouchableOpacity>
+					<TouchableOpacity
+						style={[styles.icon1, { width: '45%' }]}
+						onPress={() => navigation.navigate('Messages')}>
+						<Ionicons
+							name='paper-plane-outline'
+							color={'white'}
+							size={30}
+							style={{ marginLeft: 'auto', marginRight: 'auto' }}
+						/>
+					</TouchableOpacity>
+				</View>
 			</View>
 
-			<View style={styles.topMenu}>
-				<View style={styles.searchBox}>
+			<View style={styles.topMenu1}>
+				<View style={styles.searchBox1}>
 					<TextInput
 						placeholder='Search Athlete'
+						placeholderTextColor='grey'
 						style={styles.searchText}
 					/>
 					<Feather name='search' style={styles.searchIcon} />
 				</View>
-				<TouchableOpacity style={styles.lookingForBtn}>
-					<Text style={{ color: 'white' }}>Looking For Athlete</Text>
+				<TouchableOpacity
+					style={styles.lookingForBtn}
+					onPress={() => navigation.navigate('LookingForAthlete')}>
+					<Text style={{ color: 'white', fontSize: 13 }}>
+						Looking For Athlete
+					</Text>
 				</TouchableOpacity>
 			</View>
 
-			<View style={{ marginTop: 10 }}>
-				<View style={styles.column}>
-					<View style={styles.teamDetails}>
-						<Image
-							source={require('../assets/pics/roundedAvatar.png')}
-							style={styles.imageAvatar}></Image>
-						<Text
-							style={{
-								fontWeight: 'bold',
-								marginTop: 10,
-								marginLeft: 10,
-								color: 'black',
-							}}>
-							{' '}
-							Harry
-						</Text>
+			<View style={{ width: '95%', alignSelf: 'center' }}>
+				<View style={[styles.column, { height: 85 }]}>
+					<View
+						style={{
+							width: '20%',
+							alignItems: 'center',
+							justifyContent: 'center',
+						}}>
+						<Avatar.Image source={img1} size={50} />
+					</View>
+					<View style={{ width: '80%' }}>
 						<View
 							style={{
+								height: '50%',
 								flexDirection: 'row',
-								justifyContent: 'space-evenly',
+								justifyContent: 'space-between',
+								alignItems: 'center',
 							}}>
 							<Text
 								style={{
-									marginTop: 10,
-									marginLeft: 10,
+									fontWeight: 'bold',
 									color: 'black',
+									fontSize: 18,
 								}}>
-								{' '}
-								Professional NCAA{' '}
+								Harry
 							</Text>
-							<Image
-								source={require('../assets/pics/Vector(3).png')}
-								style={{ ...styles.membersImage }}></Image>
-							<Text style={{ marginTop: 10, color: 'black' }}>
-								London
+							<Text
+								style={{
+									color: 'gray',
+									fontSize: 13,
+								}}>
+								Professional NCAA
 							</Text>
+							<View style={{ flexDirection: 'row' }}>
+								<Ionicons
+									name='location'
+									color={'gray'}
+									size={20}
+									style={{
+										marginLeft: 'auto',
+										marginRight: 'auto',
+									}}
+								/>
+								<Text
+									style={{
+										marginRight: 10,
+										fontSize: 10,
+										marginTop: 5,
+										color: 'gray',
+									}}>
+									London
+								</Text>
+							</View>
 						</View>
-					</View>
-					<View style={{ flexDirection: 'row' }}>
-						<TouchableOpacity style={styles.buttonreq}>
-							<Text style={{ color: 'white' }}>Follow</Text>
-						</TouchableOpacity>
-						<TouchableOpacity style={styles.decline}>
-							<Text style={{ color: '#020D28' }}>Message</Text>
-						</TouchableOpacity>
-						<TouchableOpacity
-							style={{ ...styles.buttonreq, marginLeft: 5 }}>
-							<Text style={{ color: 'white' }}>Invite</Text>
-						</TouchableOpacity>
+						<View
+							style={{
+								height: '50%',
+								flexDirection: 'row',
+								alignItems: 'center',
+							}}>
+							<TouchableOpacity
+								style={[
+									styles.button,
+									{
+										backgroundColor: '#020D28',
+										width: '31%',
+										marginRight: 3,
+									},
+								]}>
+								<Text style={{ color: 'white', fontSize: 13 }}>
+									Follow
+								</Text>
+							</TouchableOpacity>
+							<TouchableOpacity
+								style={[
+									styles.button,
+									{
+										borderColor: '#020D28',
+										width: '31%',
+										marginRight: 3,
+									},
+								]}>
+								<Text
+									style={{ color: '#020D28', fontSize: 13 }}>
+									Message
+								</Text>
+							</TouchableOpacity>
+							<TouchableOpacity
+								style={[
+									styles.button,
+									{
+										backgroundColor: 'black',
+										borderColor: 'black',
+										width: '31%',
+									},
+								]}>
+								<Text style={{ color: 'white', fontSize: 13 }}>
+									Invite
+								</Text>
+							</TouchableOpacity>
+						</View>
 					</View>
 				</View>
-			</View>
 
-			<View style={{ marginTop: 10 }}>
-				<View style={styles.column}>
-					<View style={styles.teamDetails}>
-						<Image
-							source={require('../assets/pics/roundedAvatar.png')}
-							style={styles.imageAvatar}></Image>
-						<Text
-							style={{
-								fontWeight: 'bold',
-								marginTop: 10,
-								marginLeft: 10,
-								color: 'black',
-							}}>
-							{' '}
-							Harry
-						</Text>
+				<View style={[styles.column, { height: 85 }]}>
+					<View
+						style={{
+							width: '20%',
+							alignItems: 'center',
+							justifyContent: 'center',
+						}}>
+						<Avatar.Image source={img1} size={50} />
+					</View>
+					<View style={{ width: '80%' }}>
 						<View
 							style={{
+								height: '50%',
 								flexDirection: 'row',
-								justifyContent: 'space-evenly',
+								justifyContent: 'space-between',
+								alignItems: 'center',
 							}}>
 							<Text
 								style={{
-									marginTop: 10,
-									marginLeft: 10,
+									fontWeight: 'bold',
 									color: 'black',
+									fontSize: 18,
 								}}>
-								{' '}
-								Professional NCAA{' '}
+								Harry
 							</Text>
-							<Image
-								source={require('../assets/pics/Vector(3).png')}
-								style={{ ...styles.membersImage }}></Image>
-							<Text style={{ marginTop: 10, color: 'black' }}>
-								London
+							<Text
+								style={{
+									color: 'gray',
+									fontSize: 13,
+								}}>
+								Professional NCAA
 							</Text>
+							<View style={{ flexDirection: 'row' }}>
+								<Ionicons
+									name='location'
+									color={'gray'}
+									size={20}
+									style={{
+										marginLeft: 'auto',
+										marginRight: 'auto',
+									}}
+								/>
+								<Text
+									style={{
+										marginRight: 10,
+										fontSize: 10,
+										marginTop: 5,
+										color: 'gray',
+									}}>
+									London
+								</Text>
+							</View>
 						</View>
-					</View>
-					<View style={{ flexDirection: 'row' }}>
-						<TouchableOpacity style={styles.buttonreq}>
-							<Text style={{ color: 'white' }}>Follow</Text>
-						</TouchableOpacity>
-						<TouchableOpacity style={styles.decline}>
-							<Text style={{ color: '#020D28' }}>Message</Text>
-						</TouchableOpacity>
-						<TouchableOpacity
-							style={{ ...styles.buttonreq, marginLeft: 5 }}>
-							<Text style={{ color: 'white' }}>Invite</Text>
-						</TouchableOpacity>
+						<View
+							style={{
+								height: '50%',
+								flexDirection: 'row',
+								alignItems: 'center',
+							}}>
+							<TouchableOpacity
+								style={[
+									styles.button,
+									{
+										backgroundColor: '#020D28',
+										width: '31%',
+										marginRight: 3,
+									},
+								]}>
+								<Text style={{ color: 'white', fontSize: 13 }}>
+									Follow
+								</Text>
+							</TouchableOpacity>
+							<TouchableOpacity
+								style={[
+									styles.button,
+									{
+										borderColor: '#020D28',
+										width: '31%',
+										marginRight: 3,
+									},
+								]}>
+								<Text
+									style={{ color: '#020D28', fontSize: 13 }}>
+									Message
+								</Text>
+							</TouchableOpacity>
+							<TouchableOpacity
+								style={[
+									styles.button,
+									{
+										backgroundColor: 'black',
+										borderColor: 'black',
+										width: '31%',
+									},
+								]}>
+								<Text style={{ color: 'white', fontSize: 13 }}>
+									Invite
+								</Text>
+							</TouchableOpacity>
+						</View>
 					</View>
 				</View>
-			</View>
 
-			<View style={{ marginTop: 10 }}>
-				<View style={styles.column}>
-					<View style={styles.teamDetails}>
-						<Image
-							source={require('../assets/pics/roundedAvatar.png')}
-							style={styles.imageAvatar}></Image>
-						<Text
-							style={{
-								fontWeight: 'bold',
-								marginTop: 10,
-								marginLeft: 10,
-								color: 'black',
-							}}>
-							{' '}
-							Harry
-						</Text>
+				<View style={[styles.column, { height: 85 }]}>
+					<View
+						style={{
+							width: '20%',
+							alignItems: 'center',
+							justifyContent: 'center',
+						}}>
+						<Avatar.Image source={img1} size={50} />
+					</View>
+					<View style={{ width: '80%' }}>
 						<View
 							style={{
+								height: '50%',
 								flexDirection: 'row',
-								justifyContent: 'space-evenly',
+								justifyContent: 'space-between',
+								alignItems: 'center',
 							}}>
 							<Text
 								style={{
-									marginTop: 10,
-									marginLeft: 10,
+									fontWeight: 'bold',
 									color: 'black',
+									fontSize: 18,
 								}}>
-								{' '}
-								Professional NCAA{' '}
+								Harry
 							</Text>
-							<Image
-								source={require('../assets/pics/Vector(3).png')}
-								style={{ ...styles.membersImage }}></Image>
-							<Text style={{ marginTop: 10, color: 'black' }}>
-								London
-							</Text>
-						</View>
-					</View>
-					<View style={{ flexDirection: 'row' }}>
-						<TouchableOpacity style={styles.buttonreq}>
-							<Text style={{ color: 'white' }}>Follow</Text>
-						</TouchableOpacity>
-						<TouchableOpacity style={styles.decline}>
-							<Text style={{ color: '#020D28' }}>Message</Text>
-						</TouchableOpacity>
-						<TouchableOpacity
-							style={{ ...styles.buttonreq, marginLeft: 5 }}>
-							<Text style={{ color: 'white' }}>Invite</Text>
-						</TouchableOpacity>
-					</View>
-				</View>
-			</View>
-
-			<View style={{ marginTop: 10 }}>
-				<View style={styles.column}>
-					<View style={styles.teamDetails}>
-						<Image
-							source={require('../assets/pics/roundedAvatar.png')}
-							style={styles.imageAvatar}></Image>
-						<Text
-							style={{
-								fontWeight: 'bold',
-								marginTop: 10,
-								marginLeft: 10,
-								color: 'black',
-							}}>
-							{' '}
-							Harry
-						</Text>
-						<View
-							style={{
-								flexDirection: 'row',
-								justifyContent: 'space-evenly',
-							}}>
 							<Text
 								style={{
-									marginTop: 10,
-									marginLeft: 10,
-									color: 'black',
+									color: 'gray',
+									fontSize: 13,
 								}}>
-								{' '}
-								Professional NCAA{' '}
+								Professional NCAA
 							</Text>
-							<Image
-								source={require('../assets/pics/Vector(3).png')}
-								style={{ ...styles.membersImage }}></Image>
-							<Text style={{ marginTop: 10, color: 'black' }}>
-								London
-							</Text>
+							<View style={{ flexDirection: 'row' }}>
+								<Ionicons
+									name='location'
+									color={'gray'}
+									size={20}
+									style={{
+										marginLeft: 'auto',
+										marginRight: 'auto',
+									}}
+								/>
+								<Text
+									style={{
+										marginRight: 10,
+										fontSize: 10,
+										marginTop: 5,
+										color: 'gray',
+									}}>
+									London
+								</Text>
+							</View>
 						</View>
-					</View>
-					<View style={{ flexDirection: 'row' }}>
-						<TouchableOpacity style={styles.buttonreq}>
-							<Text style={{ color: 'white' }}>Follow</Text>
-						</TouchableOpacity>
-						<TouchableOpacity style={styles.decline}>
-							<Text style={{ color: '#020D28' }}>Message</Text>
-						</TouchableOpacity>
-						<TouchableOpacity
-							style={{ ...styles.buttonreq, marginLeft: 5 }}>
-							<Text style={{ color: 'white' }}>Invite</Text>
-						</TouchableOpacity>
+						<View
+							style={{
+								height: '50%',
+								flexDirection: 'row',
+								alignItems: 'center',
+							}}>
+							<TouchableOpacity
+								style={[
+									styles.button,
+									{
+										backgroundColor: '#020D28',
+										width: '31%',
+										marginRight: 3,
+									},
+								]}>
+								<Text style={{ color: 'white', fontSize: 13 }}>
+									Follow
+								</Text>
+							</TouchableOpacity>
+							<TouchableOpacity
+								style={[
+									styles.button,
+									{
+										borderColor: '#020D28',
+										width: '31%',
+										marginRight: 3,
+									},
+								]}>
+								<Text
+									style={{ color: '#020D28', fontSize: 13 }}>
+									Message
+								</Text>
+							</TouchableOpacity>
+							<TouchableOpacity
+								style={[
+									styles.button,
+									{
+										backgroundColor: 'black',
+										borderColor: 'black',
+										width: '31%',
+									},
+								]}>
+								<Text style={{ color: 'white', fontSize: 13 }}>
+									Invite
+								</Text>
+							</TouchableOpacity>
+						</View>
 					</View>
 				</View>
 			</View>
 		</View>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		backgroundColor: '#020D28',
-		height: 150,
-		flexDirection: 'row',
-	},
-	image: {
-		alignSelf: 'center',
-		marginLeft: 10,
-		width: 90,
-		height: 95,
-		marginTop: 50,
-	},
-
-	bellIcon: {
-		marginTop: 70,
-		marginLeft: 160,
-		width: 40,
-		height: 40,
-		borderRadius: 75,
-		backgroundColor: 'white',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-	imageBellIcon: {
-		alignSelf: 'center',
-	},
-	arrowIcon: {
-		marginTop: 75,
-		marginLeft: 10,
-		width: 30,
-		height: 30,
-	},
-	teamDetails: {
-		flexDirection: 'row',
-	},
-	imageAvatar: {
-		marginTop: 10,
-		marginLeft: 10,
-		width: 55,
-		height: 55,
-		borderRadius: 75,
-		overflow: 'hidden',
-		borderColor: 'white',
-	},
-	membersImage: {
-		marginTop: 10,
-
-		width: 50,
-		height: 25,
-		resizeMode: 'contain',
-		overflow: 'hidden',
-		borderColor: 'white',
-	},
-	buttonreq: {
-		width: 95,
-		height: 30,
-		marginLeft: 70,
-		backgroundColor: '#020D28',
-		borderRadius: 10,
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-	column: {
-		shadowColor: '#d9d9d9',
-		shadowRadius: 2,
-		shadowOffset: {
-			height: 2,
-			width: 2,
-		},
-		elevation: 10,
-		width: '100%',
-		height: 100,
-		borderRadius: 20,
-		backgroundColor: '#fff',
-		flexDirection: 'column',
-	},
-	decline: {
-		borderColor: '#020D28',
-		borderWidth: 1,
-		width: '20%',
-		height: 30,
-		marginLeft: 10,
-		borderRadius: 10,
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-	searchBox: {
-		margin: 10,
-		flexDirection: 'row',
-		width: '55%',
-		borderColor: '#B3ABBC',
-		borderWidth: 2,
-		borderRadius: 20,
-		height: 40,
-		justifyContent: 'space-between',
-	},
-	topMenu: {
-		flexDirection: 'row',
-		marginTop: 15,
-	},
-	lookingForBtn: {
-		marginTop: 10,
-		width: '38%',
-		height: 40,
-		marginLeft: 5,
-		backgroundColor: '#020D28',
-		borderRadius: 10,
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-	searchText: {
-		color: '#ADADAD',
-		fontSize: 16,
-		marginLeft: 15,
-	},
-	searchIcon: {
-		color: '#ADADAD',
-		alignSelf: 'center',
-		fontSize: 16,
-		marginRight: 10,
-	},
-});

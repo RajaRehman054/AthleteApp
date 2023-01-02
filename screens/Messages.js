@@ -1,16 +1,17 @@
-import * as React from 'react';
-import { TouchableOpacity, Image, Text, View, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text, View, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Avatar } from 'react-native-paper';
+import styles from './stylesnew';
+
+const img1 = require('../assets/pics/image2.png');
 
 export default function Messages({ navigation }) {
-	const img1 = require('../assets/pics/image2.png');
 	return (
 		<View>
-			<View style={styles.menubar}>
+			<View style={styles.menubar25}>
 				<TouchableOpacity
-					style={[styles.icon1, { width: '10%' }]}
-					onPress={() => navigation.navigate('TabNavigator')}>
+					style={[styles.icon16, { width: '10%' }]}
+					onPress={() => navigation.goBack()}>
 					<Ionicons
 						name='arrow-back-outline'
 						color={'white'}
@@ -31,7 +32,9 @@ export default function Messages({ navigation }) {
 				<View style={{ width: '10%', marginRight: 10 }}></View>
 			</View>
 			<View style={{ width: '95%', alignSelf: 'center' }}>
-				<View style={styles.makeRow}>
+				<TouchableOpacity
+					style={styles.makeRow1}
+					onPress={() => navigation.navigate('MessageChat')}>
 					<View
 						style={{
 							width: '25%',
@@ -56,21 +59,22 @@ export default function Messages({ navigation }) {
 						</Text>
 					</View>
 
-					<TouchableOpacity
-						style={[
-							styles.forwardIcon,
-							{
-								width: '10%',
-								alignItems: 'center',
-								justifyContent: 'center',
-							},
-						]}>
-						<Image
-							source={require('../assets/pics/Vector(4).png')}></Image>
-					</TouchableOpacity>
-				</View>
-
-				<View style={styles.makeRow}>
+					<View
+						style={{
+							width: '10%',
+							alignItems: 'center',
+							justifyContent: 'center',
+						}}>
+						<Ionicons
+							name='chevron-forward'
+							color={'gray'}
+							size={30}
+						/>
+					</View>
+				</TouchableOpacity>
+				<TouchableOpacity
+					style={styles.makeRow1}
+					onPress={() => navigation.navigate('MessageChat')}>
 					<View
 						style={{
 							width: '25%',
@@ -90,24 +94,27 @@ export default function Messages({ navigation }) {
 								...styles.messagesDescription,
 								color: 'black',
 							}}>
-							New Tournament happening in Harvard Futsal Stadium.
+							John Looking for Men's Soccerr Player to play
+							tournament on 20/2/2014.
 						</Text>
 					</View>
 
-					<TouchableOpacity
-						style={[
-							styles.forwardIcon,
-							{
-								width: '10%',
-								alignItems: 'center',
-								justifyContent: 'center',
-							},
-						]}>
-						<Image
-							source={require('../assets/pics/Vector(4).png')}></Image>
-					</TouchableOpacity>
-				</View>
-				<View style={styles.makeRow}>
+					<View
+						style={{
+							width: '10%',
+							alignItems: 'center',
+							justifyContent: 'center',
+						}}>
+						<Ionicons
+							name='chevron-forward'
+							color={'gray'}
+							size={30}
+						/>
+					</View>
+				</TouchableOpacity>
+				<TouchableOpacity
+					style={styles.makeRow1}
+					onPress={() => navigation.navigate('MessageChat')}>
 					<View
 						style={{
 							width: '25%',
@@ -127,60 +134,25 @@ export default function Messages({ navigation }) {
 								...styles.messagesDescription,
 								color: 'black',
 							}}>
-							Creating a new Team , need some kick-ass players in
-							defence and attack.
+							John Looking for Men's Soccerr Player to play
+							tournament on 20/2/2014.
 						</Text>
 					</View>
 
-					<TouchableOpacity
-						style={[
-							styles.forwardIcon,
-							{
-								width: '10%',
-								alignItems: 'center',
-								justifyContent: 'center',
-							},
-						]}>
-						<Image
-							source={require('../assets/pics/Vector(4).png')}></Image>
-					</TouchableOpacity>
-				</View>
+					<View
+						style={{
+							width: '10%',
+							alignItems: 'center',
+							justifyContent: 'center',
+						}}>
+						<Ionicons
+							name='chevron-forward'
+							color={'gray'}
+							size={30}
+						/>
+					</View>
+				</TouchableOpacity>
 			</View>
 		</View>
 	);
 }
-
-const styles = StyleSheet.create({
-	menubar: {
-		flexDirection: 'row',
-		height: 110,
-		backgroundColor: '#020D28',
-		borderBottomLeftRadius: 15,
-		borderBottomRightRadius: 15,
-		marginBottom: 20,
-		alignItems: 'center',
-	},
-
-	icon1: {
-		marginLeft: 10,
-		alignSelf: 'center',
-	},
-	makeRow: {
-		marginTop: 10,
-		shadowColor: '#d9d9d9',
-		shadowRadius: 2,
-		shadowOffset: {
-			height: 2,
-			width: 2,
-		},
-		elevation: 10,
-		width: '100%',
-		height: 90,
-		borderRadius: 20,
-		backgroundColor: '#ffffff',
-		flexDirection: 'row',
-	},
-	forwardIcon: {
-		alignSelf: 'center',
-	},
-});
