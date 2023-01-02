@@ -8,9 +8,9 @@ import {
 	ScrollView,
 	TouchableOpacity,
 } from 'react-native';
-import {colors} from '../assets/colors';
-import {useState} from 'react';
-export default ForgotPass = ({navigation}) => {
+import { colors } from '../assets/colors';
+import { useState } from 'react';
+export default ForgotPass = ({ navigation }) => {
 	const [email, setEmail] = useState('');
 	const main = () => {};
 	return (
@@ -18,7 +18,7 @@ export default ForgotPass = ({navigation}) => {
 			source={require('../assets/pics/bg.jpg')}
 			resizeMode='cover'
 			style={styles.imageBackground}
-			imageStyle={{opacity: 0.6}}>
+			imageStyle={{ opacity: 0.6 }}>
 			<ScrollView>
 				<Image
 					source={require('../assets/pics/whitelogo.png')}
@@ -50,8 +50,15 @@ export default ForgotPass = ({navigation}) => {
 						onPress={() => main()}>
 						<Text style={styles.text3}>Send</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.touch} onPress={()=>navigation.navigate("Login")}>
+					<TouchableOpacity
+						style={styles.touch}
+						onPress={() => navigation.navigate('Login')}>
 						<Text>Back to Sign In</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						style={styles.touch2}
+						onPress={() => navigation.navigate('Otp')}>
+						<Text>Use OTP</Text>
 					</TouchableOpacity>
 				</View>
 			</ScrollView>
@@ -65,7 +72,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		backgroundColor: colors.royalBlue2,
 	},
-	main: {padding: 20},
+	main: { padding: 20 },
 	image: {
 		width: '100%',
 		height: 250,
@@ -106,5 +113,9 @@ const styles = StyleSheet.create({
 	touch: {
 		marginTop: 10,
 		alignSelf: 'center',
+	},
+	touch2: {
+		marginTop: 10,
+		alignSelf: 'flex-end',
 	},
 });

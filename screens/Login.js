@@ -73,12 +73,14 @@ export default Login = ({ navigation }) => {
 							styles.btn,
 							{
 								backgroundColor:
-									user !== '' && pass !== ''
-										? colors.royalBlue2
-										: 'white',
+									user.length <= 5 || pass.length <= 5
+										? 'white'
+										: colors.royalBlue2,
 							},
 						]}
-						disabled={user === '' || pass === '' ? true : false}
+						disabled={
+							user.length <= 5 || pass.length <= 5 ? true : false
+						}
 						onPress={() => navigation.navigate('TabNavigator')}>
 						<Text style={styles.text3}>Sign In</Text>
 					</TouchableOpacity>
@@ -88,12 +90,6 @@ export default Login = ({ navigation }) => {
 						<Text>
 							Dont have an Account?
 							<Text style={styles.link}>Register</Text>
-						</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-						onPress={() => navigation.navigate('Otp')}>
-						<Text style={styles.text2}>
-							Forgot Password Via Otp
 						</Text>
 					</TouchableOpacity>
 				</View>

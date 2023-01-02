@@ -2,6 +2,7 @@ import { Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Avatar } from 'react-native-paper';
 import styles from './stylesnew';
+import VideoPlayer from 'react-native-video-player';
 
 const img1 = require('../assets/pics/image2.png');
 export default function MemberProfile({ navigation }) {
@@ -15,7 +16,6 @@ export default function MemberProfile({ navigation }) {
 							size={70}
 							style={styles.headerimg}
 						/>
-
 						<View
 							style={{ marginLeft: 'auto', marginRight: 'auto' }}>
 							<Text style={styles.text4}>driver@ups</Text>
@@ -102,7 +102,7 @@ export default function MemberProfile({ navigation }) {
 			<View style={styles.textView}>
 				<Text
 					style={{
-						color: 'Black',
+						color: 'black',
 						fontSize: 22,
 						fontWeight: 'bold',
 					}}>
@@ -113,15 +113,19 @@ export default function MemberProfile({ navigation }) {
 				style={{
 					width: '95%',
 					alignSelf: 'center',
-					flexDirection: 'row',
-					borderColor: 'yellow',
-					borderWidth: 1,
 					height: 200,
-				}}></View>
+				}}>
+				<VideoPlayer
+					video={require('../assets/video-fb.mp4')}
+					thumbnail={{
+						uri: 'https://i.picsum.photos/id/866/1600/900.jpg',
+					}}
+				/>
+			</View>
 			<View style={styles.textView}>
 				<Text
 					style={{
-						color: 'Black',
+						color: 'black',
 						fontSize: 22,
 						fontWeight: 'bold',
 					}}>
@@ -154,7 +158,7 @@ export default function MemberProfile({ navigation }) {
 			<View style={styles.textView}>
 				<Text
 					style={{
-						color: 'Black',
+						color: 'black',
 						fontSize: 22,
 						fontWeight: 'bold',
 					}}>
@@ -199,7 +203,7 @@ export default function MemberProfile({ navigation }) {
 			<View style={styles.textView}>
 				<Text
 					style={{
-						color: 'Black',
+						color: 'black',
 						fontSize: 22,
 						fontWeight: 'bold',
 					}}>
@@ -301,7 +305,7 @@ export default function MemberProfile({ navigation }) {
 			<View style={styles.textView}>
 				<Text
 					style={{
-						color: 'Black',
+						color: 'black',
 						fontSize: 22,
 						fontWeight: 'bold',
 					}}>
@@ -318,14 +322,14 @@ export default function MemberProfile({ navigation }) {
 							height: '50%',
 							alignItems: 'center',
 						}}>
-						<Text style={{ fontWeight: 'Bold', Color: '#020D28' }}>
+						<Text style={{ fontWeight: 'Bold', color: '#020D28' }}>
 							Sports
 						</Text>
-						<Text style={{ Color: 'gray' }}>Football</Text>
-						<Text style={{ fontWeight: 'Bold', Color: '#020D28' }}>
+						<Text style={{ color: 'gray' }}>Football</Text>
+						<Text style={{ fontWeight: 'Bold', color: '#020D28' }}>
 							Date
 						</Text>
-						<Text style={{ Color: 'gray' }}>22/11/2022</Text>
+						<Text style={{ color: 'gray' }}>22/11/2022</Text>
 					</View>
 					<View
 						style={{
@@ -334,14 +338,14 @@ export default function MemberProfile({ navigation }) {
 							height: '50%',
 							alignItems: 'center',
 						}}>
-						<Text style={{ fontWeight: 'Bold', Color: '#020D28' }}>
+						<Text style={{ fontWeight: 'Bold', color: '#020D28' }}>
 							Sports
 						</Text>
-						<Text style={{ Color: 'gray' }}>Football</Text>
-						<Text style={{ fontWeight: 'Bold', Color: '#020D28' }}>
+						<Text style={{ color: 'gray' }}>Football</Text>
+						<Text style={{ fontWeight: 'Bold', color: '#020D28' }}>
 							Date
 						</Text>
-						<Text style={{ Color: 'gray' }}>22/11/2022</Text>
+						<Text style={{ color: 'gray' }}>22/11/2022</Text>
 					</View>
 				</View>
 				<View
@@ -371,7 +375,7 @@ export default function MemberProfile({ navigation }) {
 							justifyContent: 'space-between',
 							alignItems: 'center',
 						}}>
-						<Text>12</Text>
+						<Text style={{ color: 'black' }}>12</Text>
 						<Ionicons
 							name='chatbubble'
 							color={'#020D28'}
@@ -390,14 +394,14 @@ export default function MemberProfile({ navigation }) {
 							height: '50%',
 							alignItems: 'center',
 						}}>
-						<Text style={{ fontWeight: 'Bold', Color: '#020D28' }}>
+						<Text style={{ fontWeight: 'Bold', color: '#020D28' }}>
 							Sports
 						</Text>
-						<Text style={{ Color: 'gray' }}>Football</Text>
-						<Text style={{ fontWeight: 'Bold', Color: '#020D28' }}>
+						<Text style={{ color: 'gray' }}>Football</Text>
+						<Text style={{ fontWeight: 'Bold', color: '#020D28' }}>
 							Date
 						</Text>
-						<Text style={{ Color: 'gray' }}>22/11/2022</Text>
+						<Text style={{ color: 'gray' }}>22/11/2022</Text>
 					</View>
 					<View
 						style={{
@@ -406,14 +410,14 @@ export default function MemberProfile({ navigation }) {
 							height: '50%',
 							alignItems: 'center',
 						}}>
-						<Text style={{ fontWeight: 'Bold', Color: '#020D28' }}>
+						<Text style={{ fontWeight: 'Bold', color: '#020D28' }}>
 							Sports
 						</Text>
-						<Text style={{ Color: 'gray' }}>Football</Text>
-						<Text style={{ fontWeight: 'Bold', Color: '#020D28' }}>
+						<Text style={{ color: 'gray' }}>Football</Text>
+						<Text style={{ fontWeight: 'Bold', color: '#020D28' }}>
 							Date
 						</Text>
-						<Text style={{ Color: 'gray' }}>22/11/2022</Text>
+						<Text style={{ color: 'gray' }}>22/11/2022</Text>
 					</View>
 				</View>
 				<View

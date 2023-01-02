@@ -39,7 +39,10 @@ export default function LookingForAthlete({ navigation }) {
 							marginRight: 10,
 						}}>
 						<TouchableOpacity
-							style={[styles.icon1, { width: '55%' }]}>
+							style={[styles.icon1, { width: '55%' }]}
+							onPress={() =>
+								navigation.navigate('Notifications')
+							}>
 							<Ionicons
 								name='notifications-circle'
 								color={'white'}
@@ -51,7 +54,8 @@ export default function LookingForAthlete({ navigation }) {
 							/>
 						</TouchableOpacity>
 						<TouchableOpacity
-							style={[styles.icon1, { width: '45%' }]}>
+							style={[styles.icon1, { width: '45%' }]}
+							onPress={() => navigation.navigate('Messages')}>
 							<Ionicons
 								name='paper-plane-outline'
 								color={'white'}
