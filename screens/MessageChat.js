@@ -96,7 +96,7 @@ export default function MessageChat({ navigation }) {
 								borderWidth: 1,
 							},
 						]}>
-						<Text> Next month?</Text>
+						<Text style={{ color: 'black' }}> Next month?</Text>
 					</View>
 					<Text
 						style={{
@@ -168,7 +168,7 @@ export default function MessageChat({ navigation }) {
 						<TextInput
 							placeholder='write message'
 							placeholderTextColor='gray'
-							style={styles.input}
+							style={{ ...styles.input, color: 'black' }}
 						/>
 					</View>
 					<View style={styles.iconview}>
