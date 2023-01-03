@@ -10,13 +10,40 @@ import {
 import { colors } from '../assets/colors';
 import { useState } from 'react';
 import { TextInput } from 'react-native-paper';
+import { auth, db } from '../firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { ref, set } from 'firebase/database';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default Register = ({ navigation }) => {
-	const [name, setName] = useState('');
 	const [user, setUser] = useState('');
+	const [email, setEmail] = useState('');
 	const [pass, setPass] = useState('');
 	const [show, setShow] = useState(false);
-	const main = () => {};
+
+	const storeData = async value => {
+		try {
+			await AsyncStorage.setItem('!!userId', value);
+		} catch (e) {
+			throw e;
+		}
+	};
+
+	const main = () => {
+		createUserWithEmailAndPassword(auth, email, pass)
+			.then(userCredential => {
+				storeData(userCredential.user.uid);
+				set(ref(db, 'users/' + userCredential.user.uid), {
+					username: user,
+					email: email,
+					password: pass,
+				});
+				navigation.navigate('ProfileSetup1');
+			})
+			.catch(error => {
+				console.log(error);
+			});
+	};
 	const showPass = () => {
 		if (show === false) {
 			setShow(true);
@@ -48,8 +75,8 @@ export default Register = ({ navigation }) => {
 						}}
 						style={styles.textInput}
 						mode='outlined'
-						value={name}
-						onChangeText={setName}
+						value={user}
+						onChangeText={setUser}
 						placeholder='Full Name'></TextInput>
 					<TextInput
 						outlineColor={colors.royalBlue2}
@@ -59,9 +86,9 @@ export default Register = ({ navigation }) => {
 						}}
 						style={styles.textInput}
 						mode='outlined'
-						value={user}
-						onChangeText={setUser}
-						placeholder='Username'></TextInput>
+						value={email}
+						onChangeText={setEmail}
+						placeholder='Email'></TextInput>
 					<TextInput
 						style={styles.textInput}
 						mode='outlined'
@@ -85,17 +112,17 @@ export default Register = ({ navigation }) => {
 							styles.btn,
 							{
 								backgroundColor:
-									user !== '' && pass !== '' && name !== ''
+									user !== '' && pass !== '' && email !== ''
 										? colors.royalBlue2
 										: 'white',
 							},
 						]}
 						disabled={
-							user === '' || pass === '' || name === ''
+							user === '' || pass === '' || email === ''
 								? true
 								: false
 						}
-						onPress={() => navigation.navigate('ProfileSetup1')}>
+						onPress={() => main()}>
 						<Text style={styles.text3}>Register Now</Text>
 					</TouchableOpacity>
 					<TouchableOpacity

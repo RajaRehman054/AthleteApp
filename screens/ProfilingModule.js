@@ -6,10 +6,26 @@ import ProfileSetup1 from '../screens/ProfileSetup1';
 import ProfileSetup2 from '../screens/ProfileSetup2';
 import ProfileSetupTeam from '../screens/ProfileSetupTeam';
 import Otp from '../screens/Otp';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect } from 'react';
 
 const Stack = createNativeStackNavigator();
 
-export default ProfilingModule = () => {
+export default ProfilingModule = ({ navigation }) => {
+	useEffect(() => {
+		const getData = async () => {
+			try {
+				const value = await AsyncStorage.getItem('!!userId');
+				if (value !== null) {
+					navigation.navigate('TabNavigator');
+				}
+			} catch (e) {
+				throw e;
+			}
+		};
+		getData();
+	}, []);
+
 	return (
 		<Stack.Navigator screenOptions={{ headerShown: false }}>
 			<Stack.Screen name='Login' component={Login}></Stack.Screen>

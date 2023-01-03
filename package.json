@@ -6,14 +6,16 @@
     "start": "react-native run-android",
     "ios": "react-native run-ios",
     "run": "react-native start",
-    "generateApk" : "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
+    "generateApk": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
     "test": "jest",
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.17.11",
     "@react-navigation/bottom-tabs": "^6.5.2",
     "@react-navigation/native": "^6.1.1",
     "@react-navigation/native-stack": "^6.9.7",
+    "firebase": "^9.15.0",
     "react": "18.1.0",
     "react-native": "0.70.6",
     "react-native-maps": "^1.3.2",

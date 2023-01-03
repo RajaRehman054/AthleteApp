@@ -10,12 +10,35 @@ import {
 import { colors } from '../assets/colors';
 import { useState } from 'react';
 import { TextInput } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase';
 
 export default Login = ({ navigation }) => {
 	const [user, setUser] = useState('');
 	const [pass, setPass] = useState('');
 	const [show, setShow] = useState(false);
-	const main = () => {};
+	const [err, setErr] = useState('');
+
+	const storeData = async value => {
+		try {
+			await AsyncStorage.setItem('!!userId', value);
+		} catch (e) {
+			throw e;
+		}
+	};
+
+	const main = () => {
+		signInWithEmailAndPassword(auth, user, pass)
+			.then(userCredential => {
+				storeData(userCredential.user.uid);
+				navigation.navigate('TabNavigator');
+			})
+			.catch(error => {
+				setErr('Invalid Credentials');
+			});
+	};
+
 	const showPass = () => {
 		if (show === false) {
 			setShow(true);
@@ -23,6 +46,7 @@ export default Login = ({ navigation }) => {
 		}
 		setShow(false);
 	};
+
 	return (
 		<ImageBackground
 			source={require('../assets/pics/bg.jpg')}
@@ -45,7 +69,7 @@ export default Login = ({ navigation }) => {
 						mode='outlined'
 						value={user}
 						onChangeText={setUser}
-						placeholder='Username'></TextInput>
+						placeholder='Email'></TextInput>
 					<TextInput
 						style={styles.textInput}
 						mode='outlined'
@@ -64,10 +88,21 @@ export default Login = ({ navigation }) => {
 								onPress={() => showPass()}
 							/>
 						}></TextInput>
-					<TouchableOpacity
-						onPress={() => navigation.navigate('ForgotPass')}>
-						<Text style={styles.text2}>Forgot Password</Text>
-					</TouchableOpacity>
+					<View style={{ flexDirection: 'row' }}>
+						<Text
+							style={{
+								color: 'red',
+								alignSelf: 'flex-start',
+								fontFamily: 'Poppins-Bold',
+								width: '60%',
+							}}>
+							{err}
+						</Text>
+						<TouchableOpacity
+							onPress={() => navigation.navigate('ForgotPass')}>
+							<Text style={styles.textF}>Forgot Password</Text>
+						</TouchableOpacity>
+					</View>
 					<TouchableOpacity
 						style={[
 							styles.btn,
@@ -81,7 +116,7 @@ export default Login = ({ navigation }) => {
 						disabled={
 							user.length <= 5 || pass.length <= 5 ? true : false
 						}
-						onPress={() => navigation.navigate('TabNavigator')}>
+						onPress={() => main()}>
 						<Text style={styles.text3}>Sign In</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
@@ -119,6 +154,9 @@ const styles = StyleSheet.create({
 	},
 	text2: {
 		alignSelf: 'flex-end',
+		marginTop: 10,
+	},
+	textF: {
 		marginTop: 10,
 	},
 	text3: {
