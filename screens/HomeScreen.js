@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Avatar } from 'react-native-paper';
@@ -7,7 +7,7 @@ import Matches from '../screens/Matches';
 import Participants from '../screens/Participants';
 
 const img1 = require('../assets/pics/image2.png');
-export default function HomeScreen({ navigation, route }) {
+export default function HomeScreen({ navigation }) {
 	const [data, setdata] = useState(1);
 	const [col, setcolor] = useState('#020D28');
 	const [col1, setcolor1] = useState('gray');
@@ -21,6 +21,7 @@ export default function HomeScreen({ navigation, route }) {
 			setcolor1('gray');
 		}
 	};
+
 	return (
 		<View>
 			<View style={styles.headerbar}>

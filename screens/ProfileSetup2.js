@@ -14,11 +14,19 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import IconM2 from 'react-native-vector-icons/MaterialIcons';
 import IconF from 'react-native-vector-icons/FontAwesome5';
 import IconM from 'react-native-vector-icons/MaterialCommunityIcons';
+import { ref, set } from 'firebase/database';
+import { db } from '../firebase';
 
-export default ProfileSetup2 = ({ navigation }) => {
+export default ProfileSetup2 = ({ navigation, route }) => {
 	const [sport, setSport] = useState('');
 	const selection = sports => {
 		setSport(sports);
+	};
+	const main = () => {
+		const obj = route.params.obj;
+		obj.toS = sport;
+		set(ref(db, 'users/' + obj.id), obj);
+		navigation.navigate('TabNavigator');
 	};
 	return (
 		<ScrollView style={{ backgroundColor: colors.royalBlue }}>
@@ -214,7 +222,7 @@ export default ProfileSetup2 = ({ navigation }) => {
 					{ backgroundColor: sport === '' ? 'snow' : colors.green },
 				]}
 				disabled={sport === '' ? true : false}
-				onPress={() => navigation.navigate('ProfileSetupTeam')}>
+				onPress={() => main()}>
 				<Text style={[styles.text2, { color: colors.charBlue }]}>
 					Next
 				</Text>

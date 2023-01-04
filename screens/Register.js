@@ -10,9 +10,8 @@ import {
 import { colors } from '../assets/colors';
 import { useState } from 'react';
 import { TextInput } from 'react-native-paper';
-import { auth, db } from '../firebase';
+import { auth } from '../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { ref, set } from 'firebase/database';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default Register = ({ navigation }) => {
@@ -33,12 +32,14 @@ export default Register = ({ navigation }) => {
 		createUserWithEmailAndPassword(auth, email, pass)
 			.then(userCredential => {
 				storeData(userCredential.user.uid);
-				set(ref(db, 'users/' + userCredential.user.uid), {
+				const obj = {
 					username: user,
 					email: email,
 					password: pass,
-				});
-				navigation.navigate('ProfileSetup1');
+					id: userCredential.user.uid,
+				};
+				console.log(obj);
+				navigation.navigate('ProfileSetup1', { obj });
 			})
 			.catch(error => {
 				console.log(error);

@@ -8,10 +8,80 @@ import {
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from './stylesnew';
+import { onValue, ref, set } from 'firebase/database';
+import { db } from '../firebase';
+import { useState, useEffect } from 'react';
+import * as ImagePicker from 'react-native-image-picker/';
 
 const img = require('../assets/pics/image2.png');
 const img1 = require('../assets/pics/pexels-nappy-936094.jpg');
-export default function EditProfile({ navigation }) {
+export default function EditProfile({ navigation, route }) {
+	const [id, setId] = useState(route.params.id);
+	const [user, setUser] = useState('');
+	const [email, setEmail] = useState('');
+	const [toA, setToA] = useState('');
+	const [toS, setToS] = useState('');
+	const [gender, setGender] = useState('');
+	const [college, setCollege] = useState('');
+	const [interest, setInterest] = useState('');
+	const [avatar, setAvatar] = useState(img);
+	const [password, setPass] = useState('');
+
+	const selectImage = () => {
+		ImagePicker.launchImageLibrary({}, response => {
+			console.log(response);
+			if (response.didCancel) {
+				console.log('User cancelled image picker');
+			} else if (response.error) {
+				console.log('ImagePicker Error: ', response.error);
+			} else {
+				setAvatar({ uri: response.assets[0].uri });
+			}
+		});
+	};
+
+	const getData = () => {
+		return onValue(ref(db, '/users/' + id), snapshot => {
+			const user = snapshot.toJSON();
+			setUser(user.username);
+			setEmail(user.email);
+			setToA(user.toA);
+			setPass(user.password);
+			setToS(user.toS);
+			setGender(user.gender);
+			setCollege(user.college);
+			setInterest(user.interest);
+			if (user.uri) {
+				setAvatar({ uri: user.uri });
+			}
+		});
+	};
+
+	const save = () => {
+		const userObj = {
+			username: user,
+			email,
+			toA,
+			toS,
+			gender,
+			college,
+			interest,
+			uri: avatar.uri,
+			password,
+		};
+		set(ref(db, 'users/' + id), userObj)
+			.then(() => {
+				navigation.navigate('TabNavigator');
+			})
+			.catch(error => {
+				console.log(error.message);
+			});
+	};
+
+	useEffect(() => {
+		getData();
+	}, []);
+
 	return (
 		<View>
 			<ScrollView>
@@ -19,7 +89,8 @@ export default function EditProfile({ navigation }) {
 					<View style={styles.view1}>
 						<View style={styles.view3}>
 							<TouchableOpacity
-								style={[styles.icon44, { width: '10%' }]} onPress={()=>navigation.goBack()}>
+								style={[styles.icon44, { width: '10%' }]}
+								onPress={() => navigation.goBack()}>
 								<Ionicons
 									name='arrow-back-outline'
 									color={'white'}
@@ -30,21 +101,24 @@ export default function EditProfile({ navigation }) {
 								<Text style={styles.text1}>Edit Profile</Text>
 							</View>
 							<TouchableOpacity
-								style={[styles.icon44, { width: '20%' }]}>
+								style={[styles.icon44, { width: '20%' }]}
+								onPress={save}>
 								<Text style={styles.text1}>Save</Text>
 							</TouchableOpacity>
 						</View>
 
 						<View style={styles.view6}>
 							<ImageBackground
-								source={img}
+								source={avatar}
 								imageStyle={{
 									width: 110,
 									height: 110,
 									borderRadius: 60,
+									resizeMode: 'cover',
 								}}>
 								<TouchableOpacity
-									style={{ marginLeft: 80, marginTop: 70 }}>
+									style={{ marginLeft: 80, marginTop: 70 }}
+									onPress={selectImage}>
 									<Ionicons
 										name='camera-outline'
 										size={30}
@@ -97,12 +171,14 @@ export default function EditProfile({ navigation }) {
 								fontSize: 18,
 								fontWeight: 'bold',
 							}}>
-							Full Name
+							Username
 						</Text>
 						<TextInput
-							placeholder='   Mick Joffery'
+							placeholder='Mick 054'
 							placeholderTextColor='gray'
-							style={styles.input}
+							style={{ ...styles.input, color: 'black' }}
+							value={user}
+							onChangeText={setUser}
 						/>
 						<Text
 							style={{
@@ -115,7 +191,9 @@ export default function EditProfile({ navigation }) {
 						<TextInput
 							placeholder='   mickjoffery@gmail.com'
 							placeholderTextColor='gray'
-							style={styles.input}
+							style={{ ...styles.input, color: 'black' }}
+							value={email}
+							onChangeText={setEmail}
 						/>
 						<Text
 							style={{
@@ -128,7 +206,9 @@ export default function EditProfile({ navigation }) {
 						<TextInput
 							placeholder='   Select your Level'
 							placeholderTextColor='gray'
-							style={styles.input}
+							style={{ ...styles.input, color: 'black' }}
+							value={toA}
+							onChangeText={setToA}
 						/>
 						<Text
 							style={{
@@ -141,7 +221,9 @@ export default function EditProfile({ navigation }) {
 						<TextInput
 							placeholder='   Select your sports'
 							placeholderTextColor='gray'
-							style={styles.input}
+							style={{ ...styles.input, color: 'black' }}
+							value={toS}
+							onChangeText={setToS}
 						/>
 						<Text
 							style={{
@@ -154,7 +236,9 @@ export default function EditProfile({ navigation }) {
 						<TextInput
 							placeholder='   Select your gender'
 							placeholderTextColor='gray'
-							style={styles.input}
+							style={{ ...styles.input, color: 'black' }}
+							value={gender}
+							onChangeText={setGender}
 						/>
 						<Text
 							style={{
@@ -167,7 +251,9 @@ export default function EditProfile({ navigation }) {
 						<TextInput
 							placeholder='   College or university'
 							placeholderTextColor='gray'
-							style={styles.input}
+							style={{ ...styles.input, color: 'black' }}
+							value={college}
+							onChangeText={setCollege}
 						/>
 						<Text
 							style={{
@@ -180,7 +266,12 @@ export default function EditProfile({ navigation }) {
 						<TextInput
 							placeholder='   Hiking, reading or movies'
 							placeholderTextColor='gray'
-							style={[styles.input, { marginBottom: 50 }]}
+							style={[
+								styles.input,
+								{ marginBottom: 50, color: 'black' },
+							]}
+							value={interest}
+							onChangeText={setInterest}
 						/>
 					</View>
 				</View>

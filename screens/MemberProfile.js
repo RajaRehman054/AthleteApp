@@ -3,24 +3,54 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Avatar } from 'react-native-paper';
 import styles from './stylesnew';
 import VideoPlayer from 'react-native-video-player';
+import { onValue, ref } from 'firebase/database';
+import { db } from '../firebase';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useState, useEffect } from 'react';
 
 const img1 = require('../assets/pics/image2.png');
 export default function MemberProfile({ navigation }) {
+	const [user, setUser] = useState({});
+	const [id, setId] = useState('');
+	const [avatar, setAvatar] = useState(img1);
+
+	useEffect(() => {
+		const getData = async () => {
+			try {
+				const value = await AsyncStorage.getItem('!!userId');
+				setId(value);
+				if (value !== null) {
+					return onValue(ref(db, '/users/' + value), snapshot => {
+						setUser(snapshot.toJSON());
+						if (snapshot.toJSON().uri)
+							setAvatar({ uri: snapshot.toJSON().uri });
+					});
+				}
+			} catch (e) {
+				console.log(e);
+			}
+		};
+		getData();
+	}, []);
+
 	return (
 		<ScrollView>
 			<View style={styles.headerbar}>
 				<View style={styles.leftview1}>
 					<View style={styles.leftview6}>
 						<Avatar.Image
-							source={img1}
+							source={avatar}
 							size={70}
 							style={styles.headerimg}
 						/>
 						<View
 							style={{ marginLeft: 'auto', marginRight: 'auto' }}>
 							<Text style={styles.text4}>driver@ups</Text>
-							<Text style={styles.text5}>Pro Athlete</Text>
-
+							{user.toA ? (
+								<Text style={styles.text5}> {user.toA} </Text>
+							) : (
+								<Text style={styles.text5}>Pro Athlete</Text>
+							)}
 							<View style={{ flexDirection: 'row' }}>
 								<Ionicons
 									name='person'
@@ -36,10 +66,12 @@ export default function MemberProfile({ navigation }) {
 
 				<View style={styles.rightview2}>
 					<View style={styles.rightview3}>
-						<Text style={styles.text1}>Lorenzo Kane</Text>
+						<Text style={styles.text1}>{user.username}</Text>
 						<TouchableOpacity
 							style={styles.settings}
-							onPress={() => navigation.navigate('EditProfile')}>
+							onPress={() =>
+								navigation.navigate('EditProfile', { id })
+							}>
 							<Ionicons
 								name='ios-settings-sharp'
 								color={'white'}

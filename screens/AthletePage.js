@@ -1,13 +1,42 @@
-import { TextInput, TouchableOpacity, Image, Text, View } from 'react-native';
+import {
+	TextInput,
+	TouchableOpacity,
+	Image,
+	Text,
+	View,
+	FlatList,
+	ActivityIndicator,
+} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Avatar } from 'react-native-paper';
 import styles from './stylesnew';
+import { useEffect, useState } from 'react';
+import { db } from '../firebase';
+import { ref, onValue } from 'firebase/database';
+import { renderFunction } from './renderFunctions/AthletePage';
 
-const img1 = require('../assets/pics/image2.png');
 const img2 = require('../assets/pics/jrz1y1(2).png');
 
 export default function AthletePage({ navigation }) {
+	const [athletes, setAthletes] = useState([]);
+	const [loader, setLoader] = useState(true);
+
+	const fetchData = () => {
+		onValue(ref(db, 'users'), snapshot => {
+			setAthletes([]);
+			snapshot.forEach(elem => {
+				setAthletes(prev => [...prev, elem.val()]);
+			});
+		});
+		setInterval(() => {
+			setLoader(false);
+		}, 4000);
+	};
+
+	useEffect(() => {
+		fetchData();
+	}, []);
+
 	return (
 		<View>
 			<View style={styles.menubar}>
@@ -29,7 +58,10 @@ export default function AthletePage({ navigation }) {
 							name='notifications-circle'
 							color={'white'}
 							size={45}
-							style={{ marginLeft: 'auto', marginRight: 'auto' }}
+							style={{
+								marginLeft: 'auto',
+								marginRight: 'auto',
+							}}
 						/>
 					</TouchableOpacity>
 					<TouchableOpacity
@@ -39,7 +71,10 @@ export default function AthletePage({ navigation }) {
 							name='paper-plane-outline'
 							color={'white'}
 							size={30}
-							style={{ marginLeft: 'auto', marginRight: 'auto' }}
+							style={{
+								marginLeft: 'auto',
+								marginRight: 'auto',
+							}}
 						/>
 					</TouchableOpacity>
 				</View>
@@ -62,317 +97,23 @@ export default function AthletePage({ navigation }) {
 					</Text>
 				</TouchableOpacity>
 			</View>
-
-			<View style={{ width: '95%', alignSelf: 'center' }}>
-				<View style={[styles.column, { height: 85 }]}>
-					<View
+			{loader ? (
+				<View>
+					<ActivityIndicator size='large' color='blue' />
+					<Text
 						style={{
-							width: '20%',
-							alignItems: 'center',
-							justifyContent: 'center',
+							color: '#020D28',
+							alignSelf: 'center',
+							margin: 20,
 						}}>
-						<Avatar.Image source={img1} size={50} />
-					</View>
-					<View style={{ width: '80%' }}>
-						<View
-							style={{
-								height: '50%',
-								flexDirection: 'row',
-								justifyContent: 'space-between',
-								alignItems: 'center',
-							}}>
-							<Text
-								style={{
-									fontWeight: 'bold',
-									color: 'black',
-									fontSize: 18,
-								}}>
-								Harry
-							</Text>
-							<Text
-								style={{
-									color: 'gray',
-									fontSize: 13,
-								}}>
-								Professional NCAA
-							</Text>
-							<View style={{ flexDirection: 'row' }}>
-								<Ionicons
-									name='location'
-									color={'gray'}
-									size={20}
-									style={{
-										marginLeft: 'auto',
-										marginRight: 'auto',
-									}}
-								/>
-								<Text
-									style={{
-										marginRight: 10,
-										fontSize: 10,
-										marginTop: 5,
-										color: 'gray',
-									}}>
-									London
-								</Text>
-							</View>
-						</View>
-						<View
-							style={{
-								height: '50%',
-								flexDirection: 'row',
-								alignItems: 'center',
-							}}>
-							<TouchableOpacity
-								style={[
-									styles.button,
-									{
-										backgroundColor: '#020D28',
-										width: '31%',
-										marginRight: 3,
-									},
-								]}>
-								<Text style={{ color: 'white', fontSize: 13 }}>
-									Follow
-								</Text>
-							</TouchableOpacity>
-							<TouchableOpacity
-								style={[
-									styles.button,
-									{
-										borderColor: '#020D28',
-										width: '31%',
-										marginRight: 3,
-									},
-								]}>
-								<Text
-									style={{ color: '#020D28', fontSize: 13 }}>
-									Message
-								</Text>
-							</TouchableOpacity>
-							<TouchableOpacity
-								style={[
-									styles.button,
-									{
-										backgroundColor: 'black',
-										borderColor: 'black',
-										width: '31%',
-									},
-								]}>
-								<Text style={{ color: 'white', fontSize: 13 }}>
-									Invite
-								</Text>
-							</TouchableOpacity>
-						</View>
-					</View>
+						Fetching Data...
+					</Text>
 				</View>
-
-				<View style={[styles.column, { height: 85 }]}>
-					<View
-						style={{
-							width: '20%',
-							alignItems: 'center',
-							justifyContent: 'center',
-						}}>
-						<Avatar.Image source={img1} size={50} />
-					</View>
-					<View style={{ width: '80%' }}>
-						<View
-							style={{
-								height: '50%',
-								flexDirection: 'row',
-								justifyContent: 'space-between',
-								alignItems: 'center',
-							}}>
-							<Text
-								style={{
-									fontWeight: 'bold',
-									color: 'black',
-									fontSize: 18,
-								}}>
-								Harry
-							</Text>
-							<Text
-								style={{
-									color: 'gray',
-									fontSize: 13,
-								}}>
-								Professional NCAA
-							</Text>
-							<View style={{ flexDirection: 'row' }}>
-								<Ionicons
-									name='location'
-									color={'gray'}
-									size={20}
-									style={{
-										marginLeft: 'auto',
-										marginRight: 'auto',
-									}}
-								/>
-								<Text
-									style={{
-										marginRight: 10,
-										fontSize: 10,
-										marginTop: 5,
-										color: 'gray',
-									}}>
-									London
-								</Text>
-							</View>
-						</View>
-						<View
-							style={{
-								height: '50%',
-								flexDirection: 'row',
-								alignItems: 'center',
-							}}>
-							<TouchableOpacity
-								style={[
-									styles.button,
-									{
-										backgroundColor: '#020D28',
-										width: '31%',
-										marginRight: 3,
-									},
-								]}>
-								<Text style={{ color: 'white', fontSize: 13 }}>
-									Follow
-								</Text>
-							</TouchableOpacity>
-							<TouchableOpacity
-								style={[
-									styles.button,
-									{
-										borderColor: '#020D28',
-										width: '31%',
-										marginRight: 3,
-									},
-								]}>
-								<Text
-									style={{ color: '#020D28', fontSize: 13 }}>
-									Message
-								</Text>
-							</TouchableOpacity>
-							<TouchableOpacity
-								style={[
-									styles.button,
-									{
-										backgroundColor: 'black',
-										borderColor: 'black',
-										width: '31%',
-									},
-								]}>
-								<Text style={{ color: 'white', fontSize: 13 }}>
-									Invite
-								</Text>
-							</TouchableOpacity>
-						</View>
-					</View>
+			) : (
+				<View style={{ width: '95%', alignSelf: 'center' }}>
+					<FlatList data={athletes} renderItem={renderFunction} />
 				</View>
-
-				<View style={[styles.column, { height: 85 }]}>
-					<View
-						style={{
-							width: '20%',
-							alignItems: 'center',
-							justifyContent: 'center',
-						}}>
-						<Avatar.Image source={img1} size={50} />
-					</View>
-					<View style={{ width: '80%' }}>
-						<View
-							style={{
-								height: '50%',
-								flexDirection: 'row',
-								justifyContent: 'space-between',
-								alignItems: 'center',
-							}}>
-							<Text
-								style={{
-									fontWeight: 'bold',
-									color: 'black',
-									fontSize: 18,
-								}}>
-								Harry
-							</Text>
-							<Text
-								style={{
-									color: 'gray',
-									fontSize: 13,
-								}}>
-								Professional NCAA
-							</Text>
-							<View style={{ flexDirection: 'row' }}>
-								<Ionicons
-									name='location'
-									color={'gray'}
-									size={20}
-									style={{
-										marginLeft: 'auto',
-										marginRight: 'auto',
-									}}
-								/>
-								<Text
-									style={{
-										marginRight: 10,
-										fontSize: 10,
-										marginTop: 5,
-										color: 'gray',
-									}}>
-									London
-								</Text>
-							</View>
-						</View>
-						<View
-							style={{
-								height: '50%',
-								flexDirection: 'row',
-								alignItems: 'center',
-							}}>
-							<TouchableOpacity
-								style={[
-									styles.button,
-									{
-										backgroundColor: '#020D28',
-										width: '31%',
-										marginRight: 3,
-									},
-								]}>
-								<Text style={{ color: 'white', fontSize: 13 }}>
-									Follow
-								</Text>
-							</TouchableOpacity>
-							<TouchableOpacity
-								style={[
-									styles.button,
-									{
-										borderColor: '#020D28',
-										width: '31%',
-										marginRight: 3,
-									},
-								]}>
-								<Text
-									style={{ color: '#020D28', fontSize: 13 }}>
-									Message
-								</Text>
-							</TouchableOpacity>
-							<TouchableOpacity
-								style={[
-									styles.button,
-									{
-										backgroundColor: 'black',
-										borderColor: 'black',
-										width: '31%',
-									},
-								]}>
-								<Text style={{ color: 'white', fontSize: 13 }}>
-									Invite
-								</Text>
-							</TouchableOpacity>
-						</View>
-					</View>
-				</View>
-			</View>
+			)}
 		</View>
 	);
 }

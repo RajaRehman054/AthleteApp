@@ -13,8 +13,12 @@ import { useState } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon2 from 'react-native-vector-icons/FontAwesome';
 
-export default ProfileSetup1 = ({ navigation }) => {
-	const main = () => {};
+export default ProfileSetup1 = ({ navigation, route }) => {
+	const main = val => {
+		const obj = route.params.obj;
+		obj.toP = val;
+		navigation.navigate('ProfileSetup2', { obj });
+	};
 	return (
 		<View style={styles.main}>
 			<Image
@@ -23,15 +27,13 @@ export default ProfileSetup1 = ({ navigation }) => {
 			<Text style={styles.text}>Type of Profile</Text>
 			<TouchableOpacity
 				style={styles.touch}
-				onPress={() => navigation.navigate('ProfileSetup2')}>
+				onPress={() => main('individual')}>
 				<Text>
 					<Icon name='person' color={colors.royalBlue} size={160} />
 				</Text>
 				<Text style={styles.text2}>Individual</Text>
 			</TouchableOpacity>
-			<TouchableOpacity
-				style={styles.touch}
-				onPress={() => navigation.navigate('ProfileSetup2')}>
+			<TouchableOpacity style={styles.touch} onPress={() => main('team')}>
 				<Text>
 					<Icon2 name='users' color={colors.royalBlue} size={160} />
 				</Text>

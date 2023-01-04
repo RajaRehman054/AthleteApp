@@ -2,12 +2,24 @@ import React, { useState } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Switch } from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import MatericalIcons from 'react-native-vector-icons/MaterialIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Settings({ navigation }) {
 	const [isEnabled, setIsEnabled] = React.useState(false);
 	const [isSwitchOn, setIsSwitchOn] = React.useState(false);
 	const onToggleSwitch = () => setIsEnabled(!isEnabled);
 	const onToggleSwitch1 = () => setIsSwitchOn(!isSwitchOn);
+
+	const logout = async () => {
+		try {
+			await AsyncStorage.clear();
+			navigation.popToTop();
+		} catch (e) {
+			console.log(e);
+		}
+	};
+
 	return (
 		<View>
 			<View style={styles.menubar}>
@@ -183,6 +195,20 @@ export default function Settings({ navigation }) {
 							/>
 						</View>
 						<Text style={styles.text12}>Privacy Policy</Text>
+					</TouchableOpacity>
+					<TouchableOpacity style={styles.button11} onPress={logout}>
+						<View style={{ width: '15%' }}>
+							<MatericalIcons
+								name='logout'
+								color={'#020D28'}
+								size={25}
+								style={{
+									marginLeft: 'auto',
+									marginRight: 'auto',
+								}}
+							/>
+						</View>
+						<Text style={styles.text12}>Logout</Text>
 					</TouchableOpacity>
 				</View>
 			</View>
