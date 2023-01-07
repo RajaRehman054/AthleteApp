@@ -7,6 +7,7 @@ import ProfileSetup2 from '../screens/ProfileSetup2';
 import ProfileSetupTeam from '../screens/ProfileSetupTeam';
 import Otp from '../screens/Otp';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StackActions } from '@react-navigation/native';
 import { useEffect } from 'react';
 
 const Stack = createNativeStackNavigator();
@@ -17,14 +18,14 @@ export default ProfilingModule = ({ navigation }) => {
 			try {
 				const value = await AsyncStorage.getItem('!!userId');
 				if (value !== null) {
-					navigation.navigate('TabNavigator');
+					navigation.dispatch(StackActions.replace('TabNavigator'));
 				}
 			} catch (e) {
 				throw e;
 			}
 		};
 		getData();
-	}, []);
+	});
 
 	return (
 		<Stack.Navigator screenOptions={{ headerShown: false }}>

@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from './stylesnew';
-import { onValue, ref, set } from 'firebase/database';
+import { onValue, ref, update } from 'firebase/database';
 import { db } from '../firebase';
 import { useState, useEffect } from 'react';
 import * as ImagePicker from 'react-native-image-picker/';
@@ -25,7 +25,6 @@ export default function EditProfile({ navigation, route }) {
 	const [college, setCollege] = useState('');
 	const [interest, setInterest] = useState('');
 	const [avatar, setAvatar] = useState(img);
-	const [password, setPass] = useState('');
 
 	const selectImage = () => {
 		ImagePicker.launchImageLibrary({}, response => {
@@ -46,7 +45,6 @@ export default function EditProfile({ navigation, route }) {
 			setUser(user.username);
 			setEmail(user.email);
 			setToA(user.toA);
-			setPass(user.password);
 			setToS(user.toS);
 			setGender(user.gender);
 			setCollege(user.college);
@@ -67,9 +65,8 @@ export default function EditProfile({ navigation, route }) {
 			college,
 			interest,
 			uri: avatar.uri,
-			password,
 		};
-		set(ref(db, 'users/' + id), userObj)
+		update(ref(db, 'users/' + id), userObj)
 			.then(() => {
 				navigation.navigate('TabNavigator');
 			})

@@ -19,6 +19,7 @@ export default Register = ({ navigation }) => {
 	const [email, setEmail] = useState('');
 	const [pass, setPass] = useState('');
 	const [show, setShow] = useState(false);
+	const [error, setError] = useState('');
 
 	const storeData = async value => {
 		try {
@@ -29,6 +30,10 @@ export default Register = ({ navigation }) => {
 	};
 
 	const main = () => {
+		if (user.length <= 4) {
+			setError('Username should be more than four characters.');
+			return;
+		}
 		createUserWithEmailAndPassword(auth, email, pass)
 			.then(userCredential => {
 				storeData(userCredential.user.uid);
@@ -41,8 +46,12 @@ export default Register = ({ navigation }) => {
 				console.log(obj);
 				navigation.navigate('ProfileSetup1', { obj });
 			})
-			.catch(error => {
-				console.log(error);
+			.catch(err => {
+				console.log(err.code);
+				if (err.code === 'auth/invalid-email')
+					setError('Invalid Email entered.');
+				else if (err.code === 'auth/weak-password')
+					setError('Weak password entered.');
 			});
 	};
 	const showPass = () => {
@@ -64,6 +73,17 @@ export default Register = ({ navigation }) => {
 					style={styles.image}></Image>
 				<View style={styles.main}>
 					<Text style={styles.text}>Create A New Account</Text>
+					{error !== '' ? (
+						<Text
+							style={{
+								...styles.touch,
+								color: 'darkred',
+								fontFamily: 'Poppins-Bold',
+								fontSize: 15,
+							}}>
+							{error}
+						</Text>
+					) : null}
 					<Text style={styles.touch}>
 						Please put your information below to create a new
 						account and find yourself an athlete partner

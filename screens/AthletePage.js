@@ -28,9 +28,9 @@ export default function AthletePage({ navigation }) {
 				setAthletes(prev => [...prev, elem.val()]);
 			});
 		});
-		setInterval(() => {
-			setLoader(false);
-		}, 4000);
+		setTimeout(() => {
+			setLoader(prev => !prev);
+		}, 3000);
 	};
 
 	useEffect(() => {

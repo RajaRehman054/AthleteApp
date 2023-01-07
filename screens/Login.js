@@ -13,6 +13,7 @@ import { TextInput } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
+import { StackActions } from '@react-navigation/native';
 
 export default Login = ({ navigation }) => {
 	const [user, setUser] = useState('');
@@ -32,7 +33,7 @@ export default Login = ({ navigation }) => {
 		signInWithEmailAndPassword(auth, user, pass)
 			.then(userCredential => {
 				storeData(userCredential.user.uid);
-				navigation.navigate('TabNavigator');
+				navigation.dispatch(StackActions.replace('TabNavigator'));
 			})
 			.catch(error => {
 				setErr('Invalid Credentials');
@@ -59,6 +60,17 @@ export default Login = ({ navigation }) => {
 					style={styles.image}></Image>
 				<View style={styles.main}>
 					<Text style={styles.text}>Lets Sign You In</Text>
+					{err !== '' ? (
+						<Text
+							style={{
+								color: 'red',
+								alignSelf: 'center',
+								fontFamily: 'Poppins-Bold',
+								fontSize: 15,
+							}}>
+							{err}
+						</Text>
+					) : null}
 					<TextInput
 						outlineColor={colors.royalBlue2}
 						theme={{
@@ -88,33 +100,22 @@ export default Login = ({ navigation }) => {
 								onPress={() => showPass()}
 							/>
 						}></TextInput>
-					<View style={{ flexDirection: 'row' }}>
-						<Text
-							style={{
-								color: 'red',
-								alignSelf: 'flex-start',
-								fontFamily: 'Poppins-Bold',
-								width: '60%',
-							}}>
-							{err}
-						</Text>
-						<TouchableOpacity
-							onPress={() => navigation.navigate('ForgotPass')}>
-							<Text style={styles.textF}>Forgot Password</Text>
-						</TouchableOpacity>
-					</View>
+					<TouchableOpacity
+						onPress={() => navigation.navigate('ForgotPass')}>
+						<Text style={styles.text2}>Forgot Password</Text>
+					</TouchableOpacity>
 					<TouchableOpacity
 						style={[
 							styles.btn,
 							{
 								backgroundColor:
-									user.length <= 5 || pass.length <= 5
+									user.length <= 5 || pass === ''
 										? 'white'
 										: colors.royalBlue2,
 							},
 						]}
 						disabled={
-							user.length <= 5 || pass.length <= 5 ? true : false
+							user.length <= 5 || pass === '' ? true : false
 						}
 						onPress={() => main()}>
 						<Text style={styles.text3}>Sign In</Text>
@@ -154,9 +155,6 @@ const styles = StyleSheet.create({
 	},
 	text2: {
 		alignSelf: 'flex-end',
-		marginTop: 10,
-	},
-	textF: {
 		marginTop: 10,
 	},
 	text3: {

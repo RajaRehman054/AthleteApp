@@ -4,6 +4,7 @@ import { Switch } from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MatericalIcons from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StackActions } from '@react-navigation/native';
 
 export default function Settings({ navigation }) {
 	const [isEnabled, setIsEnabled] = React.useState(false);
@@ -14,7 +15,8 @@ export default function Settings({ navigation }) {
 	const logout = async () => {
 		try {
 			await AsyncStorage.clear();
-			navigation.popToTop();
+			navigation.navigate('TabNavigator');
+			navigation.dispatch(StackActions.replace('ProfilingModule'));
 		} catch (e) {
 			console.log(e);
 		}
