@@ -86,7 +86,6 @@ export default function JoinTeams() {
 								]}>
 								<Text
 									style={{ color: '#020D28', fontSize: 13 }}>
-									{' '}
 									View
 								</Text>
 							</TouchableOpacity>

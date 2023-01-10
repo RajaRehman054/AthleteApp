@@ -10,9 +10,21 @@ import {
 } from 'react-native';
 import { colors } from '../assets/colors';
 import { useState } from 'react';
+import { sendPasswordResetEmail } from 'firebase/auth';
+import { auth } from '../firebase';
+
 export default ForgotPass = ({ navigation }) => {
 	const [email, setEmail] = useState('');
-	const main = () => {};
+
+	const main = () => {
+		sendPasswordResetEmail(auth, email, null)
+			.then(() => {
+				alert('reset email sent to ' + email);
+			})
+			.catch(function (e) {
+				console.log(e);
+			});
+	};
 	return (
 		<ImageBackground
 			source={require('../assets/pics/bg.jpg')}
@@ -52,7 +64,7 @@ export default ForgotPass = ({ navigation }) => {
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={styles.touch}
-						onPress={() => navigation.navigate('Login')}>
+						onPress={() => navigation.popToTop()}>
 						<Text>Back to Sign In</Text>
 					</TouchableOpacity>
 					<TouchableOpacity

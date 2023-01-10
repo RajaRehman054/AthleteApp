@@ -22,7 +22,7 @@ export default App = () => {
 	useEffect(() => {
 		setTimeout(() => {
 			SplashScreen.hide();
-		}, 100);
+		}, 200);
 	}, []);
 
 	return (

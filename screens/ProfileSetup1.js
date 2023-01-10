@@ -9,7 +9,6 @@ import {
 	TouchableOpacity,
 } from 'react-native';
 import { colors } from '../assets/colors';
-import { useState } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon2 from 'react-native-vector-icons/FontAwesome';
 

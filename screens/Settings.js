@@ -122,9 +122,7 @@ export default function Settings({ navigation }) {
 							/>
 						</View>
 					</View>
-					<TouchableOpacity
-						style={styles.button11}
-						onPress={() => navigation.navigate('EditProfile')}>
+					<TouchableOpacity style={styles.button11}>
 						<View style={{ width: '15%' }}>
 							<Ionicons
 								name='settings-sharp'

@@ -1,12 +1,11 @@
-import { TouchableOpacity, Text, View } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Avatar } from 'react-native-paper';
+import { TouchableOpacity, Image, Text, View } from 'react-native';
 import styles from '../stylesnew';
-
 const img1 = require('../../assets/pics/image2.png');
+const img = require('../../assets/pics/Group5.png');
 
 export const renderFunction = ({ item }) => (
-	<View style={[styles.column, { height: 85 }]}>
+	<View style={[styles.column, { height: 75 }]}>
 		<View
 			style={{
 				width: '20%',
@@ -15,8 +14,7 @@ export const renderFunction = ({ item }) => (
 			}}>
 			<Avatar.Image
 				source={item.uri !== undefined ? { uri: item.uri } : img1}
-				size={60}
-				style={{ resizeMode: 'contain' }}
+				size={50}
 			/>
 		</View>
 		<View style={{ width: '80%' }}>
@@ -25,47 +23,49 @@ export const renderFunction = ({ item }) => (
 					height: '50%',
 					flexDirection: 'row',
 					justifyContent: 'space-between',
-					alignItems: 'center',
 				}}>
 				<Text
 					style={{
 						fontWeight: 'bold',
+						marginTop: 10,
 						color: 'black',
-						fontSize: 18,
 					}}>
-					{item.username}
+					{item.teamName} 🏅
 				</Text>
 				<Text
 					style={{
-						color: 'gray',
-						fontSize: 13,
+						fontWeight: 'bold',
+						marginTop: 10,
+						color: 'black',
 					}}>
-					Professional NCAA
+					{item.teamFor}
+				</Text>
+				<Text
+					style={{
+						fontWeight: 'bold',
+						marginTop: 10,
+						color: '#2A5EE0',
+					}}>
+					{item.teamSports}
 				</Text>
 				<View style={{ flexDirection: 'row' }}>
-					<Ionicons
-						name='location'
-						color={'gray'}
-						size={20}
-						style={{
-							marginLeft: 'auto',
-							marginRight: 'auto',
-						}}
-					/>
+					<Image source={img} style={styles.membersImage}></Image>
 					<Text
 						style={{
+							marginTop: 14,
 							marginRight: 10,
 							fontSize: 10,
-							marginTop: 5,
-							color: 'gray',
+							color: 'black',
+							fontWeight: 'bold',
 						}}>
-						London
+						{item.location}
 					</Text>
 				</View>
 			</View>
 			<View
 				style={{
 					height: '50%',
+					width: '80%',
 					flexDirection: 'row',
 					alignItems: 'center',
 				}}>
@@ -74,35 +74,20 @@ export const renderFunction = ({ item }) => (
 						styles.button,
 						{
 							backgroundColor: '#020D28',
-							width: '31%',
 							marginRight: 3,
+							width: '49%',
 						},
 					]}>
-					<Text style={{ color: 'white', fontSize: 13 }}>Follow</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					style={[
-						styles.button,
-						{
-							borderColor: '#020D28',
-							width: '31%',
-							marginRight: 3,
-						},
-					]}>
-					<Text style={{ color: '#020D28', fontSize: 13 }}>
-						Message
+					<Text style={{ color: 'white', fontSize: 13 }}>
+						Request to Join
 					</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
 					style={[
 						styles.button,
-						{
-							backgroundColor: 'black',
-							borderColor: 'black',
-							width: '31%',
-						},
+						{ borderColor: '#020D28', width: '49%' },
 					]}>
-					<Text style={{ color: 'white', fontSize: 13 }}>Invite</Text>
+					<Text style={{ color: '#020D28', fontSize: 13 }}>View</Text>
 				</TouchableOpacity>
 			</View>
 		</View>

@@ -16,9 +16,20 @@ import IconF from 'react-native-vector-icons/FontAwesome5';
 import IconM from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ref, set } from 'firebase/database';
 import { db } from '../firebase';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StackActions } from '@react-navigation/native';
 
 export default ProfileSetup2 = ({ navigation, route }) => {
 	const [sport, setSport] = useState('');
+
+	const storeData = async value => {
+		try {
+			await AsyncStorage.setItem('!!userId', value);
+		} catch (e) {
+			throw e;
+		}
+	};
+
 	const selection = sports => {
 		setSport(sports);
 	};
@@ -26,7 +37,9 @@ export default ProfileSetup2 = ({ navigation, route }) => {
 		const obj = route.params.obj;
 		obj.toS = sport;
 		set(ref(db, 'users/' + obj.id), obj);
-		navigation.navigate('TabNavigator');
+		storeData(obj.id);
+		navigation.navigate('ProfilingModule');
+		navigation.dispatch(StackActions.replace('TabNavigator'));
 	};
 	return (
 		<ScrollView style={{ backgroundColor: colors.royalBlue }}>

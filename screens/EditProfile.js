@@ -25,10 +25,10 @@ export default function EditProfile({ navigation, route }) {
 	const [college, setCollege] = useState('');
 	const [interest, setInterest] = useState('');
 	const [avatar, setAvatar] = useState(img);
+	const [err, setErr] = useState(null);
 
 	const selectImage = () => {
 		ImagePicker.launchImageLibrary({}, response => {
-			console.log(response);
 			if (response.didCancel) {
 				console.log('User cancelled image picker');
 			} else if (response.error) {
@@ -55,24 +55,27 @@ export default function EditProfile({ navigation, route }) {
 		});
 	};
 
-	const save = () => {
-		const userObj = {
-			username: user,
-			email,
-			toA,
-			toS,
-			gender,
-			college,
-			interest,
-			uri: avatar.uri,
-		};
-		update(ref(db, 'users/' + id), userObj)
-			.then(() => {
-				navigation.navigate('TabNavigator');
-			})
-			.catch(error => {
-				console.log(error.message);
-			});
+	const save = async () => {
+		try {
+			const userObj = {
+				username: user,
+				email,
+				toA,
+				toS,
+				gender,
+				college,
+				interest,
+				uri: avatar.uri,
+			};
+			await update(ref(db, 'users/' + id), userObj);
+			navigation.navigate('TabNavigator');
+		} catch (error) {
+			if (avatar.uri === undefined) {
+				setErr('Must select a picture.');
+				return;
+			}
+			setErr('All fields must be filled');
+		}
 	};
 
 	useEffect(() => {
@@ -162,6 +165,16 @@ export default function EditProfile({ navigation, route }) {
 				</View>
 				<View style={styles.midview}>
 					<View style={styles.partView7}>
+						<Text
+							style={{
+								color: 'darkred',
+								fontSize: 18,
+								fontWeight: 'bold',
+								alignSelf: 'center',
+								margin: 5,
+							}}>
+							{err}
+						</Text>
 						<Text
 							style={{
 								color: '#020D28',

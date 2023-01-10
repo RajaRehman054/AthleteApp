@@ -29,7 +29,7 @@ export default function AthletePage({ navigation }) {
 			});
 		});
 		setTimeout(() => {
-			setLoader(prev => !prev);
+			setLoader(false);
 		}, 3000);
 	};
 
@@ -38,7 +38,7 @@ export default function AthletePage({ navigation }) {
 	}, []);
 
 	return (
-		<View>
+		<View style={{ flex: 1 }}>
 			<View style={styles.menubar}>
 				<TouchableOpacity
 					style={[styles.icon1, { width: '17%', marginLeft: 10 }]}>
@@ -106,11 +106,11 @@ export default function AthletePage({ navigation }) {
 							alignSelf: 'center',
 							margin: 20,
 						}}>
-						Fetching Data...
+						Fetching Athletes...
 					</Text>
 				</View>
 			) : (
-				<View style={{ width: '95%', alignSelf: 'center' }}>
+				<View style={{ alignSelf: 'center', flex: 1 }}>
 					<FlatList data={athletes} renderItem={renderFunction} />
 				</View>
 			)}

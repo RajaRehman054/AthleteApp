@@ -12,7 +12,6 @@ import { useState } from 'react';
 import { TextInput } from 'react-native-paper';
 import { auth } from '../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default Register = ({ navigation }) => {
 	const [user, setUser] = useState('');
@@ -21,14 +20,6 @@ export default Register = ({ navigation }) => {
 	const [show, setShow] = useState(false);
 	const [error, setError] = useState('');
 
-	const storeData = async value => {
-		try {
-			await AsyncStorage.setItem('!!userId', value);
-		} catch (e) {
-			throw e;
-		}
-	};
-
 	const main = () => {
 		if (user.length <= 4) {
 			setError('Username should be more than four characters.');
@@ -36,18 +27,15 @@ export default Register = ({ navigation }) => {
 		}
 		createUserWithEmailAndPassword(auth, email, pass)
 			.then(userCredential => {
-				storeData(userCredential.user.uid);
 				const obj = {
 					username: user,
 					email: email,
 					password: pass,
 					id: userCredential.user.uid,
 				};
-				console.log(obj);
 				navigation.navigate('ProfileSetup1', { obj });
 			})
 			.catch(err => {
-				console.log(err.code);
 				if (err.code === 'auth/invalid-email')
 					setError('Invalid Email entered.');
 				else if (err.code === 'auth/weak-password')

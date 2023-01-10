@@ -1,5 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
 	Text,
 	View,
@@ -7,10 +6,45 @@ import {
 	StyleSheet,
 	TextInput,
 } from 'react-native';
-
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import { onValue, ref } from 'firebase/database';
+import { db } from '../firebase';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export default function ChangePassword({ navigation }) {
+	const [user, setUser] = useState('');
+	const [old, setOld] = useState('');
+	const [newP, setNewP] = useState('');
+	const [newC, setNewC] = useState('');
+	const [err, setErr] = useState('');
+	const getData = async () => {
+		const value = await AsyncStorage.getItem('!!userId');
+		console.log(value);
+		return onValue(ref(db, '/users/' + value), snapshot => {
+			setUser(snapshot.toJSON());
+		});
+	};
+
+	const main = () => {
+		if (old === '' || newP === '' || newC === '') {
+			setErr('All fields must be filled');
+			return;
+		}
+		if (old !== user.password) {
+			setErr('Wrong Password Entered');
+			return;
+		}
+		if (newP !== newC) {
+			setErr('Passwords doesnot match');
+			return;
+		}
+		navigation.navigate('Settings');
+	};
+
+	useEffect(() => {
+		getData();
+	}, []);
 	return (
 		<View>
 			<View style={styles.menubar}>
@@ -50,7 +84,10 @@ export default function ChangePassword({ navigation }) {
 					<TextInput
 						placeholder='Password'
 						placeholderTextColor='gray'
-						style={styles.input}
+						style={{ ...styles.input, color: 'black' }}
+						value={old}
+						onChangeText={setOld}
+						secureTextEntry
 					/>
 					<Text
 						style={{
@@ -63,7 +100,10 @@ export default function ChangePassword({ navigation }) {
 					<TextInput
 						placeholder='Password'
 						placeholderTextColor='gray'
-						style={styles.input}
+						style={{ ...styles.input, color: 'black' }}
+						value={newP}
+						onChangeText={setNewP}
+						secureTextEntry
 					/>
 					<Text
 						style={{
@@ -76,14 +116,29 @@ export default function ChangePassword({ navigation }) {
 					<TextInput
 						placeholder='Password'
 						placeholderTextColor='gray'
-						style={styles.input}
+						style={{ ...styles.input, color: 'black' }}
+						value={newC}
+						onChangeText={setNewC}
+						secureTextEntry
 					/>
 
-					<TouchableOpacity style={styles.button11}>
+					<TouchableOpacity
+						style={styles.button11}
+						onPress={() => main()}>
 						<Text style={styles.text12}>Update Password </Text>
 					</TouchableOpacity>
 				</View>
 			</View>
+			<Text
+				style={{
+					color: 'darkred',
+					fontSize: 18,
+					fontWeight: 'bold',
+					alignSelf: 'center',
+					margin: 5,
+				}}>
+				{err}
+			</Text>
 		</View>
 	);
 }
