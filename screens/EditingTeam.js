@@ -9,14 +9,7 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
 import { useEffect, useState } from 'react';
-import {
-	onValue,
-	ref,
-	update,
-	set,
-	get,
-	orderByChild,
-} from 'firebase/database';
+import { onValue, ref, update, set } from 'firebase/database';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'react-native-image-picker/';
 import { db } from '../firebase';
@@ -74,7 +67,9 @@ export default function EditingTeam({ navigation, route }) {
 		if (exist) {
 			update(ref(db, 'teams/' + id), teamObj)
 				.then(() => {
-					navigation.navigate('TabNavigator');
+					update(ref(db, 'users/' + id), {
+						team: { id, teamName },
+					}).then(() => navigation.navigate('TabNavigator'));
 				})
 				.catch(error => {
 					console.log(error.message);

@@ -4,10 +4,110 @@ import {
 	View,
 	ScrollView,
 	TextInput,
+	Alert,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from './stylesnew';
+import { useState, useEffect } from 'react';
+import { ref, update, set, remove, onValue } from 'firebase/database';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { db } from '../firebase';
+
 export default function LookingForAthlete({ navigation }) {
+	const [sports, setSports] = useState('');
+	const [gender, setGender] = useState('');
+	const [date, setDate] = useState('');
+	const [location, setLocation] = useState('');
+	const [time, setTime] = useState('');
+	const [description, setDescription] = useState('');
+	const [range, setRange] = useState('');
+	const [exist, setExist] = useState(false);
+	const [id, setId] = useState('');
+
+	const getData = async () => {
+		try {
+			const value = await AsyncStorage.getItem('!!userId');
+			setId(value);
+			onValue(ref(db, '/lookingforAthletes/' + value), snapshot => {
+				if (snapshot.exists()) {
+					setExist(true);
+					const athlete = snapshot.val();
+					setGender(athlete.gender);
+					setDate(athlete.date);
+					setLocation(athlete.location);
+					setTime(athlete.time);
+					setDescription(athlete.description);
+					setRange(athlete.range);
+					setSports(athlete.sports);
+				}
+			});
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	const deleteAthlete = () => {
+		if (!exist) {
+			Alert.alert('Please add a athlete first.');
+			return;
+		}
+		remove(ref(db, 'lookingforAthletes/' + id))
+			.then(() => {
+				Alert.alert('Athlete Deleted Succesfully.');
+				navigation.navigate('TabNavigator');
+			})
+			.catch(error => {
+				console.log(error.message);
+			});
+	};
+
+	const main = () => {
+		if (
+			description === '' ||
+			sports === '' ||
+			location === '' ||
+			range === '' ||
+			gender === '' ||
+			time === '' ||
+			date === ''
+		) {
+			Alert.alert('Please fill all the fields first.');
+			return;
+		}
+		const obj = {
+			sports,
+			description,
+			range,
+			location,
+			gender,
+			time,
+			date,
+		};
+		if (exist) {
+			update(ref(db, 'lookingforAthletes/' + id), obj)
+				.then(() => {
+					Alert.alert('Athlete Updated Successfully.');
+					navigation.navigate('TabNavigator');
+				})
+				.catch(error => {
+					console.log(error.message);
+				});
+		} else {
+			set(ref(db, 'lookingforAthletes/' + id), obj)
+				.then(() => {
+					Alert.alert('Athlete Added Succesfully.');
+					navigation.navigate('TabNavigator');
+				})
+				.catch(error => {
+					console.log(error.message);
+				});
+		}
+	};
+
+	useEffect(() => {
+		getData();
+	}, []);
+
 	return (
 		<View>
 			<ScrollView>
@@ -82,7 +182,9 @@ export default function LookingForAthlete({ navigation }) {
 						<TextInput
 							placeholder='Select the Sports'
 							placeholderTextColor='gray'
-							style={styles.input}
+							style={{ ...styles.input, color: 'black' }}
+							value={sports}
+							onChangeText={setSports}
 						/>
 						<Text
 							style={{
@@ -95,7 +197,9 @@ export default function LookingForAthlete({ navigation }) {
 						<TextInput
 							placeholder='Gender'
 							placeholderTextColor='gray'
-							style={styles.input}
+							style={{ ...styles.input, color: 'black' }}
+							value={gender}
+							onChangeText={setGender}
 						/>
 						<Text
 							style={{
@@ -108,7 +212,9 @@ export default function LookingForAthlete({ navigation }) {
 						<TextInput
 							placeholder='London'
 							placeholderTextColor='gray'
-							style={styles.input}
+							style={{ ...styles.input, color: 'black' }}
+							value={location}
+							onChangeText={setLocation}
 						/>
 						<Text
 							style={{
@@ -121,7 +227,9 @@ export default function LookingForAthlete({ navigation }) {
 						<TextInput
 							placeholder='dd/mm/yyyy'
 							placeholderTextColor='gray'
-							style={styles.input}
+							style={{ ...styles.input, color: 'black' }}
+							value={date}
+							onChangeText={setDate}
 						/>
 						<Text
 							style={{
@@ -134,7 +242,9 @@ export default function LookingForAthlete({ navigation }) {
 						<TextInput
 							placeholder='12:00'
 							placeholderTextColor='gray'
-							style={styles.input}
+							style={{ ...styles.input, color: 'black' }}
+							value={time}
+							onChangeText={setTime}
 						/>
 						<Text
 							style={{
@@ -146,7 +256,12 @@ export default function LookingForAthlete({ navigation }) {
 						</Text>
 						<TextInput
 							placeholderTextColor='gray'
-							style={[styles.input, { height: 130 }]}
+							style={[
+								styles.input,
+								{ height: 130, color: 'darkblue' },
+							]}
+							value={description}
+							onChangeText={setDescription}
 						/>
 						<Text
 							style={{
@@ -159,13 +274,19 @@ export default function LookingForAthlete({ navigation }) {
 						<TextInput
 							placeholder='30 miles'
 							placeholderTextColor='gray'
-							style={styles.input}
+							style={{ ...styles.input, color: 'black' }}
+							value={range}
+							onChangeText={setRange}
 						/>
 
-						<TouchableOpacity style={styles.button11}>
+						<TouchableOpacity
+							style={styles.button11}
+							onPress={main}>
 							<Text style={styles.text12}>Completed</Text>
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.button13}>
+						<TouchableOpacity
+							style={styles.button13}
+							onPress={deleteAthlete}>
 							<Text style={[styles.text12, { color: '#020D28' }]}>
 								Delete
 							</Text>
